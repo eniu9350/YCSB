@@ -1,0 +1,7 @@
+workload
+
+===db===
+old: read, scan, insert, update, delete
+add: deleteAndSave
+
+===workload===
