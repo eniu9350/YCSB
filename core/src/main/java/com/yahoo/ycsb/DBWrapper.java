@@ -165,4 +165,10 @@ public class DBWrapper extends DB
 		_measurements.reportReturnCode("DELETE",res);
 		return res;
 	}
+
+	@Override
+	public int expireAndLog(String table, String key) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

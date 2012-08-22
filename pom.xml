@@ -3,68 +3,26 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<repositories>
-	<!-- 
+		<!-- <repository> <id>repo2</id> <name>Human Readable Name for this Mirror.</name> 
+			<url>http://repo2.maven.org/maven2/</url> <snapshots> <enabled>false</enabled> 
+			</snapshots> </repository> <repository> <id>net-cn</id> <name>Human Readable 
+			Name for this Mirror.</name> <url>http://maven.net.cn/content/groups/public/</url> 
+			<snapshots> <enabled>false</enabled> </snapshots> </repository> <repository> 
+			<id>ui</id> <name>Human Readable Name for this Mirror.</name> <url>http://uk.maven.org/maven2/</url> 
+			<snapshots> <enabled>false</enabled> </snapshots> </repository> <repository> 
+			<id>ibiblio</id> <name>Human Readable Name for this Mirror.</name> <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url> 
+			<snapshots> <enabled>false</enabled> </snapshots> </repository> <repository> 
+			<id>jboss-public-repository-group</id> <name>JBoss Public Repository Group</name> 
+			<url>http://repository.jboss.org/nexus/content/groups/public</url> <snapshots> 
+			<enabled>false</enabled> </snapshots> </repository> <repository> <id>skynet.be</id> 
+			<name>JBoss Public Repository Group</name> <url>http://maven2.mirrors.skynet.be/pub/maven2</url> 
+			<snapshots> <enabled>false</enabled> </snapshots> </repository> <repository> 
+			<id>cica.es</id> <name>JBoss Public Repository Group</name> <url>http://ftp.cica.es/mirrors/maven2</url> 
+			<snapshots> <enabled>false</enabled> </snapshots> </repository> -->
 		<repository>
-			<id>repo2</id>
-			<name>Human Readable Name for this Mirror.</name>
-			<url>http://repo2.maven.org/maven2/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
+			<id>dsprepo</id>
+			<url>http://localhost:8081/nexus/content/repositories/dsprepo</url>
 		</repository>
-		<repository>
-			<id>net-cn</id>
-			<name>Human Readable Name for this Mirror.</name>
-			<url>http://maven.net.cn/content/groups/public/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>ui</id>
-			<name>Human Readable Name for this Mirror.</name>
-			<url>http://uk.maven.org/maven2/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>ibiblio</id>
-			<name>Human Readable Name for this Mirror.</name>
-			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>jboss-public-repository-group</id>
-			<name>JBoss Public Repository Group</name>
-			<url>http://repository.jboss.org/nexus/content/groups/public</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>skynet.be</id>
-			<name>JBoss Public Repository Group</name>
-			<url>http://maven2.mirrors.skynet.be/pub/maven2</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>cica.es</id>
-			<name>JBoss Public Repository Group</name>
-			<url>http://ftp.cica.es/mirrors/maven2</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		-->
-		 <repository>
-    		<id>dsprepo</id>
-    		<url>http://localhost:8081/nexus/content/repositories/dsprepo</url>
-  		</repository>
 	</repositories>
 
 
@@ -145,6 +103,8 @@
 		<module>redis</module>
 		<module>voldemort</module>
 		<module>distribution</module>
+		<module>redismongodb-raw</module>
+		<module>redismongodb-bridged</module>
 	</modules>
 
 	<build>

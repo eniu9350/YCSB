@@ -234,6 +234,13 @@ public class BasicDB extends DB
 		return 0;
 	}
 
+
+	@Override
+	public int expireAndLog(String table, String key) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	/**
 	 * Short test of BasicDB
 	 */

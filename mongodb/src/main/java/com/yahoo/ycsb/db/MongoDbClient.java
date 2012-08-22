@@ -317,5 +317,11 @@ public class MongoDbClient extends DB {
         }
 
     }
+
+	@Override
+	public int expireAndLog(String table, String key) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
 

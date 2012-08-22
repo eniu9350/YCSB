@@ -128,4 +128,9 @@ public class RedisClient extends DB {
         return 0;
     }
 
+	@Override
+	public int expireAndLog(String table, String key) {
+		return 0;
+	}
+
 }

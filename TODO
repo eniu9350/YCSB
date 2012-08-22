@@ -2,6 +2,13 @@ workload
 
 ===db===
 old: read, scan, insert, update, delete
-add: deleteAndSave
+add: expireAndLog
+
+two db requires implementation
 
 ===workload===
+
+
+===jedis===
+add "expireandlog" method
+
