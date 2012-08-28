@@ -175,6 +175,12 @@ public class SstoreWorkLoad extends Workload {
 	 */
 	public static final String READMODIFYWRITE_PROPORTION_PROPERTY_DEFAULT = "0.0";
 
+	
+	//niuj added
+	public static final String DELETEANDLOG_PROPORTION_PROPERTY = "deleteandlogproportion";
+	public static final String DELETEANDLOG_PROPORTION_PROPERTY_DEFAULT = "0.0";
+	//niuj added end
+	
 	/**
 	 * The name of the property for the the distribution of requests across the
 	 * keyspace. Options are "uniform", "zipfian" and "latest"
@@ -291,6 +297,9 @@ public class SstoreWorkLoad extends Workload {
 	 * Initialize the scenario. Called once, in the main client thread, before
 	 * any operations are started.
 	 */
+	/**
+	 * insertorder, requestdistribution --- var keychooser
+	 */
 	public void init(Properties p) throws WorkloadException {
 		table = p.getProperty(TABLENAME_PROPERTY, TABLENAME_PROPERTY_DEFAULT);
 
@@ -311,6 +320,9 @@ public class SstoreWorkLoad extends Workload {
 		double readmodifywriteproportion = Double.parseDouble(p.getProperty(
 				READMODIFYWRITE_PROPORTION_PROPERTY,
 				READMODIFYWRITE_PROPORTION_PROPERTY_DEFAULT));
+		double deleteandlogproportion = Double.parseDouble(p.getProperty(
+				DELETEANDLOG_PROPORTION_PROPERTY,
+				DELETEANDLOG_PROPORTION_PROPERTY_DEFAULT));
 		recordcount = Integer.parseInt(p
 				.getProperty(Client.RECORD_COUNT_PROPERTY));
 		String requestdistrib = p.getProperty(REQUEST_DISTRIBUTION_PROPERTY,
@@ -366,6 +378,10 @@ public class SstoreWorkLoad extends Workload {
 		if (readmodifywriteproportion > 0) {
 			operationchooser.addValue(readmodifywriteproportion,
 					"READMODIFYWRITE");
+		}
+		if (deleteandlogproportion > 0) {
+			operationchooser.addValue(deleteandlogproportion,
+					"DELETEANDLOG");
 		}
 
 		transactioninsertkeysequence = new CounterGenerator(recordcount);
@@ -487,8 +503,8 @@ public class SstoreWorkLoad extends Workload {
 			doTransactionScan(db);
 		}
 		// niuj added 0823
-		else if (op.compareTo("EXPIREANDLOG") == 0) {
-			doTransactionExpireAndLog(db);
+		else if (op.compareTo("DELETEANDLOG") == 0) {
+			doTransactionDeleteAndLog(db); // mmm: expire?
 		}
 		// niuj added 0823 end
 		else {
@@ -514,7 +530,7 @@ public class SstoreWorkLoad extends Workload {
 	}
 
 	// niuj added 0823
-	public void doTransactionExpireAndLog(DB db) {
+	public void doTransactionDeleteAndLog(DB db) {
 		// choose a random key
 		int keynum = nextKeynum();
 
@@ -531,6 +547,7 @@ public class SstoreWorkLoad extends Workload {
 		}
 
 		db.expireAndLog(table, keyname);
+		// added
 	}
 
 	// niuj added 0823 ended

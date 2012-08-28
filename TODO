@@ -11,4 +11,4 @@ two db requires implementation
 
 ===jedis===
 add "expireandlog" method
-
+delete deleteandsave

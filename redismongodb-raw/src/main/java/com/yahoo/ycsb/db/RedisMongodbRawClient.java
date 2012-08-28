@@ -7,6 +7,7 @@
 
 package com.yahoo.ycsb.db;
 
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +20,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Protocol;
 
 import com.mongodb.Mongo;
+import com.mongodb.MongoException;
 import com.yahoo.ycsb.ByteIterator;
 import com.yahoo.ycsb.DB;
 import com.yahoo.ycsb.DBException;
@@ -32,6 +34,12 @@ public class RedisMongodbRawClient extends DB {
 	public static final String HOST_PROPERTY = "redis.host";
 	public static final String PORT_PROPERTY = "redis.port";
 	public static final String PASSWORD_PROPERTY = "redis.password";
+
+	public static final String MONGO_HOST_PROPERTY = "mongo.host";
+	public static final String MONGO_PORT_PROPERTY = "mongo.port";
+	public static final int MONGO_DEFAULT_PORT = 27017;
+	public static final String MONGO_DBNAME = "sstore";
+	public static final String MONGO_COLLNAME = "session";
 
 	public static final String INDEX_KEY = "_indices";
 
@@ -53,6 +61,23 @@ public class RedisMongodbRawClient extends DB {
 		String password = props.getProperty(PASSWORD_PROPERTY);
 		if (password != null) {
 			jedis.auth(password);
+		}
+
+		// niuj added
+		String mongoHost = props.getProperty(MONGO_HOST_PROPERTY);
+		String mongoPortString = props.getProperty(MONGO_PORT_PROPERTY);
+		int mongoPort;
+		if (mongoPortString != null) {
+			mongoPort = Integer.parseInt(mongoPortString);
+		} else {
+			mongoPort = MONGO_DEFAULT_PORT;
+		}
+		try {
+			mongo = new Mongo(mongoHost, mongoPort);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (MongoException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -146,7 +171,7 @@ public class RedisMongodbRawClient extends DB {
 		jedis.zrem(INDEX_KEY, key);
 
 		// 3. save to mongodb
-		// mongo.getDB("").getCollection("").save(jo);
+//		mongo.getDB(MONGO_DBNAME).getCollection(MONGO_COLLNAME).save();
 		// end
 		return 0;
 	}

@@ -23,6 +23,11 @@
 			<id>dsprepo</id>
 			<url>http://localhost:8081/nexus/content/repositories/dsprepo</url>
 		</repository>
+		
+		<repository>
+			<id>dspsnapshotrepo</id>
+			<url>http://localhost:8081/nexus/content/repositories/dspsnapshotrepo</url>
+		</repository>
 	</repositories>
 
 
@@ -82,8 +87,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<thrift.version>0.8.0</thrift.version>
 		<hypertable.version>0.9.5.6</hypertable.version>
+		<!-- 
 		<socksProxyHost>192.168.8.159</socksProxyHost>
 		<socksProxyPort>2080</socksProxyPort>
+		 -->
 	</properties>
 
 	<modules>
