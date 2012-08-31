@@ -134,6 +134,7 @@ public class RedisMongodbBridgedClient extends DB {
 
 	@Override
 	public int expireAndLog(String table, String key) {
+//		jedis.del
 		return 0;
 	}
 

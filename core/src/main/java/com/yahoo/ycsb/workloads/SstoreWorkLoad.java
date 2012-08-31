@@ -547,7 +547,8 @@ public class SstoreWorkLoad extends Workload {
 		}
 
 		db.expireAndLog(table, keyname);
-		// added
+		//added
+		
 	}
 
 	// niuj added 0823 ended
