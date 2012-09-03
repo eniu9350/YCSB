@@ -9,6 +9,7 @@ import java.util.Vector;
 import com.yahoo.ycsb.ByteIterator;
 import com.yahoo.ycsb.Client;
 import com.yahoo.ycsb.DB;
+import com.yahoo.ycsb.DBWrapper;
 import com.yahoo.ycsb.RandomByteIterator;
 import com.yahoo.ycsb.Utils;
 import com.yahoo.ycsb.Workload;
@@ -531,6 +532,7 @@ public class SstoreWorkLoad extends Workload {
 
 	// niuj added 0823
 	public void doTransactionDeleteAndLog(DB db) {
+		System.out.println("doTransactionDeleteAndLog , db classname= "+((DBWrapper)db).get_db().getClass().getCanonicalName());
 		// choose a random key
 		int keynum = nextKeynum();
 
@@ -547,6 +549,7 @@ public class SstoreWorkLoad extends Workload {
 		}
 
 		db.expireAndLog(table, keyname);
+		System.out.println("doTransactionDeleteAndLog end");
 		//added
 		
 	}
@@ -554,6 +557,7 @@ public class SstoreWorkLoad extends Workload {
 	// niuj added 0823 ended
 
 	public void doTransactionRead(DB db) {
+		System.out.println("doTransactionRead");
 		// choose a random key
 		int keynum = nextKeynum();
 

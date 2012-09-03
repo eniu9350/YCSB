@@ -134,7 +134,14 @@ public class RedisMongodbBridgedClient extends DB {
 
 	@Override
 	public int expireAndLog(String table, String key) {
-//		jedis.del
+		// delete from redis
+		// mmm: no checking of return value
+		System.out.println("RMBridgedClient expireAndLog");
+		jedis.delAndLog(key);
+
+		// 3. save to mongodb
+//		mongo.getDB(MONGO_DBNAME).getCollection(MONGO_COLLNAME).save();
+		// end
 		return 0;
 	}
 

@@ -169,6 +169,21 @@ public class DBWrapper extends DB
 	@Override
 	public int expireAndLog(String table, String key) {
 		// TODO Auto-generated method stub
-		return 0;
+		
+		long st=System.nanoTime();
+		int res=_db.expireAndLog(table,key);
+		long en=System.nanoTime();
+		_measurements.measure("DELETEANDLOG",(int)((en-st)/1000));
+		_measurements.reportReturnCode("DELETEANDLOG",res);
+		return res;
+		
+	}
+
+	public DB get_db() {
+		return _db;
+	}
+
+	public void set_db(DB _db) {
+		this._db = _db;
 	}
 }

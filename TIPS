@@ -1,1 +1,4 @@
-mvn reactor:make -Dmake.folders=mm2
+mvn reactor:make -Dmake.folders=core
+
+bin/ycsb load redismongodb-bridged -P workloads/workloadss
+bin/ycsb run redismongodb-bridged -P workloads/workloadss
