@@ -176,12 +176,11 @@ public class SstoreWorkLoad extends Workload {
 	 */
 	public static final String READMODIFYWRITE_PROPORTION_PROPERTY_DEFAULT = "0.0";
 
-	
-	//niuj added
+	// niuj added
 	public static final String DELETEANDLOG_PROPORTION_PROPERTY = "deleteandlogproportion";
 	public static final String DELETEANDLOG_PROPORTION_PROPERTY_DEFAULT = "0.0";
-	//niuj added end
-	
+	// niuj added end
+
 	/**
 	 * The name of the property for the the distribution of requests across the
 	 * keyspace. Options are "uniform", "zipfian" and "latest"
@@ -381,8 +380,7 @@ public class SstoreWorkLoad extends Workload {
 					"READMODIFYWRITE");
 		}
 		if (deleteandlogproportion > 0) {
-			operationchooser.addValue(deleteandlogproportion,
-					"DELETEANDLOG");
+			operationchooser.addValue(deleteandlogproportion, "DELETEANDLOG");
 		}
 
 		transactioninsertkeysequence = new CounterGenerator(recordcount);
@@ -532,7 +530,8 @@ public class SstoreWorkLoad extends Workload {
 
 	// niuj added 0823
 	public void doTransactionDeleteAndLog(DB db) {
-		System.out.println("doTransactionDeleteAndLog , db classname= "+((DBWrapper)db).get_db().getClass().getCanonicalName());
+		System.out.println("doTransactionDeleteAndLog , db classname= "
+				+ ((DBWrapper) db).get_db().getClass().getCanonicalName());
 		// choose a random key
 		int keynum = nextKeynum();
 
@@ -550,8 +549,8 @@ public class SstoreWorkLoad extends Workload {
 
 		db.expireAndLog(table, keyname);
 		System.out.println("doTransactionDeleteAndLog end");
-		//added
-		
+		// added
+
 	}
 
 	// niuj added 0823 ended

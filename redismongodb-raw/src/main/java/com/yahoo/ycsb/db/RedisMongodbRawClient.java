@@ -19,8 +19,13 @@ import java.util.Vector;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Protocol;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.WriteConcern;
+import com.mongodb.WriteResult;
 import com.yahoo.ycsb.ByteIterator;
 import com.yahoo.ycsb.DB;
 import com.yahoo.ycsb.DBException;
@@ -38,8 +43,8 @@ public class RedisMongodbRawClient extends DB {
 	public static final String MONGO_HOST_PROPERTY = "mongo.host";
 	public static final String MONGO_PORT_PROPERTY = "mongo.port";
 	public static final int MONGO_DEFAULT_PORT = 27017;
-	public static final String MONGO_DBNAME = "sstore";
-	public static final String MONGO_COLLNAME = "session";
+	public static final String MONGO_DBNAME = "sstore_raw";
+	public static final String MONGO_COLLNAME = "users";
 
 	public static final String INDEX_KEY = "_indices";
 
@@ -165,15 +170,44 @@ public class RedisMongodbRawClient extends DB {
 		Map<String, ByteIterator> result = new HashMap<String, ByteIterator>();
 		StringByteIterator.putAllAsByteIterators(result, jedis.hgetAll(key));
 
-		// 2. delete from redis
-		// mmm: no checking of return value
-		jedis.del(key);
-		jedis.zrem(INDEX_KEY, key);
+		
 
 		// 3. save to mongodb
-//		mongo.getDB(MONGO_DBNAME).getCollection(MONGO_COLLNAME).save();
+		int retResult;
+		WriteResult res = null;
+		com.mongodb.DB db = null;
+		try{
+		db = mongo.getDB(MONGO_DBNAME);
+				 db.requestStart();
+        DBCollection collection = db.getCollection(MONGO_COLLNAME);
+        DBObject r = new BasicDBObject().append("_id", key);
+        
+		
+		for(String k: result.keySet()) {
+			r.put(k, result.get(k).toArray());
+		    }
+		
+		res = collection.insert(r,WriteConcern.SAFE);
+		retResult =( res.getError() == null ? 0 : 1);
+        
+	}catch (Exception e) {
+            e.printStackTrace();
+            retResult= 1;
+        } finally {
+            if (db!=null)
+            {
+                db.requestDone();
+            }
+        }
+		
+		
+		
+		// 2. delete from redis
+				// mmm: no checking of return value
+				jedis.del(key);
+				jedis.zrem(INDEX_KEY, key);
+		
 		// end
-		return 0;
+		return retResult;
 	}
-
 }
